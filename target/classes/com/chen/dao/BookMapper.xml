@@ -18,7 +18,12 @@
     <select id="queryBookById" parameterType="_int" resultType="Books">
         select * from books where bookID=#{bookID}
     </select>
+
     <select id="queryAllBook" resultType="Books">
         select * from books
+    </select>
+
+    <select id="queryBookByName" resultType="Books">
+        select * from books where bookName=#{bookName}
     </select>
 </mapper>

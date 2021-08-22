@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.Resource;
+import java.util.ArrayList;
 import java.util.List;
 
 @Controller
@@ -56,10 +57,23 @@ public class BookController {
         return "redirect:/book/allBook";
     }
 
-    // 删除书籍
-    @RequestMapping("/deleteBook/{id}")
-    public String deleteBook(@PathVariable int id){
+    // 删除书籍 http://localhost:8080/SSM/book/deleteBook/2
+    @RequestMapping("/deleteBook/{id123}")
+    public String deleteBook(@PathVariable("id123") int id){
         bookService.deleteBook(id);
         return "redirect:/book/allBook";
+    }
+
+    // 查询书籍
+    @RequestMapping("/queryBook")
+    public String queryBook(@RequestParam("queryBookName") String bookName, Model model) {
+        if ("".equals(bookName) || bookName==null) {
+            return "redirect:/book/allBook";
+        }
+        Books books = bookService.queryBookByName(bookName);
+        List<Books> booksList = new ArrayList<Books>();
+        booksList.add(books);
+        model.addAttribute("books", booksList);
+        return "allBook";
     }
 }
